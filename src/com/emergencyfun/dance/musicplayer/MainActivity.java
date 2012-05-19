@@ -16,8 +16,6 @@
 
 package com.emergencyfun.dance.musicplayer;
 
-import com.emergencyfun.dance.musicplayer.R;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -27,19 +25,29 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 
-/** 
- * Main activity: shows media player buttons. This activity shows the media player buttons and
- * lets the user click them. No media handling is done here -- everything is done by passing
- * Intents to our {@link MusicService}.
+/**
+ * Main activity: shows media player buttons. This activity shows the media
+ * player buttons and lets the user click them. No media handling is done here
+ * -- everything is done by passing Intents to our {@link MusicService}.
  * */
 public class MainActivity extends Activity implements OnClickListener {
     /**
-     * The URL we suggest as default when adding by URL. This is just so that the user doesn't
-     * have to find an URL to test this sample.
+     * The URL we suggest as default when adding by URL. This is just so that
+     * the user doesn't have to find an URL to test this sample.
      */
+
+    String[] presidents = { "Dwight D. Eisenhower", "John F. Kennedy",
+            "Lyndon B. Johnson", "Richard Nixon", "Gerald Ford",
+            "Jimmy Carter", "Ronald Reagan", "George H. W. Bush",
+            "Bill Clinton", "George W. Bush", "Barack Obama" };
+
     final String SUGGESTED_URL = "http://www.vorbis.com/music/Epoq-Lepidoptera.ogg";
 
     Button mPlayButton;
@@ -48,11 +56,13 @@ public class MainActivity extends Activity implements OnClickListener {
     Button mRewindButton;
     Button mStopButton;
     Button mEjectButton;
-
+    
+    ListView mMyList;
+    
     /**
-     * Called when the activity is first created. Here, we simply set the event listeners and
-     * start the background service ({@link MusicService}) that will handle the actual media
-     * playback.
+     * Called when the activity is first created. Here, we simply set the event
+     * listeners and start the background service ({@link MusicService}) that
+     * will handle the actual media playback.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,10 +82,28 @@ public class MainActivity extends Activity implements OnClickListener {
         mRewindButton.setOnClickListener(this);
         mStopButton.setOnClickListener(this);
         mEjectButton.setOnClickListener(this);
+
+        mMyList = (ListView) findViewById(R.id.my_list);
+        
+        mMyList.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, presidents));
+        mMyList.setClickable(true);
+        mMyList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+
+                Toast.makeText(getApplicationContext(), 
+                        "You have selected " + presidents[position] + "to be your mom", 
+                        Toast.LENGTH_SHORT).show();
+                
+            }
+          });
     }
 
     public void onClick(View target) {
-        // Send the correct intent to the MusicService, according to the button that was clicked
+        // Send the correct intent to the MusicService, according to the button
+        // that was clicked
         if (target == mPlayButton)
             startService(new Intent(MusicService.ACTION_PLAY));
         else if (target == mPauseButton)
@@ -91,10 +119,10 @@ public class MainActivity extends Activity implements OnClickListener {
         }
     }
 
-    /** 
-     * Shows an alert dialog where the user can input a URL. After showing the dialog, if the user
-     * confirms, sends the appropriate intent to the {@link MusicService} to cause that URL to be
-     * played.
+    /**
+     * Shows an alert dialog where the user can input a URL. After showing the
+     * dialog, if the user confirms, sends the appropriate intent to the
+     * {@link MusicService} to cause that URL to be played.
      */
     void showUrlDialog() {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
@@ -105,19 +133,23 @@ public class MainActivity extends Activity implements OnClickListener {
 
         input.setText(SUGGESTED_URL);
 
-        alertBuilder.setPositiveButton("Play!", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dlg, int whichButton) {
-                // Send an intent with the URL of the song to play. This is expected by
-                // MusicService.
-                Intent i = new Intent(MusicService.ACTION_URL);
-                Uri uri = Uri.parse(input.getText().toString());
-                i.setData(uri);
-                startService(i);
-            }
-        });
-        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dlg, int whichButton) {}
-        });
+        alertBuilder.setPositiveButton("Play!",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dlg, int whichButton) {
+                        // Send an intent with the URL of the song to play. This
+                        // is expected by
+                        // MusicService.
+                        Intent i = new Intent(MusicService.ACTION_URL);
+                        Uri uri = Uri.parse(input.getText().toString());
+                        i.setData(uri);
+                        startService(i);
+                    }
+                });
+        alertBuilder.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dlg, int whichButton) {
+                    }
+                });
 
         alertBuilder.show();
     }
@@ -125,10 +157,10 @@ public class MainActivity extends Activity implements OnClickListener {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
-            case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
-            case KeyEvent.KEYCODE_HEADSETHOOK:
-                startService(new Intent(MusicService.ACTION_TOGGLE_PLAYBACK));
-                return true;
+        case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
+        case KeyEvent.KEYCODE_HEADSETHOOK:
+            startService(new Intent(MusicService.ACTION_TOGGLE_PLAYBACK));
+            return true;
         }
         return super.onKeyDown(keyCode, event);
     }

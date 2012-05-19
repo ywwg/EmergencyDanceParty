@@ -13,13 +13,18 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="#000040"
     android:gravity="center"
-    android:background="#000040">
+    android:orientation="vertical" >
+
+    <ListView
+        android:id="@+id/my_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.5" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -30,48 +35,62 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <LinearLayout android:orientation="horizontal"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:gravity="center"
-        android:layout_margin="10dp">
-        <Button android:id="@+id/rewindbutton"
-            android:background="@drawable/btn_rew"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/rewindbutton"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:layout_margin="5dp" />
-        <Button android:id="@+id/playbutton"
-            android:background="@drawable/btn_play"
+            android:layout_margin="5dp"
+            android:background="@drawable/btn_rew" />
+
+        <Button
+            android:id="@+id/playbutton"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:layout_margin="5dp" />
-        <Button android:id="@+id/pausebutton"
-            android:background="@drawable/btn_pause"
+            android:layout_margin="5dp"
+            android:background="@drawable/btn_play" />
+
+        <Button
+            android:id="@+id/pausebutton"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:layout_margin="5dp" />
-        <Button android:id="@+id/skipbutton"
-            android:background="@drawable/btn_ff"
+            android:layout_margin="5dp"
+            android:background="@drawable/btn_pause" />
+
+        <Button
+            android:id="@+id/skipbutton"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:layout_margin="5dp" />
+            android:layout_margin="5dp"
+            android:background="@drawable/btn_ff" />
     </LinearLayout>
 
-    <LinearLayout android:orientation="horizontal"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:gravity="center"
-        android:layout_margin="10dp">
-        <Button android:id="@+id/stopbutton"
-            android:background="@drawable/btn_stop"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_margin="5dp" />
-        <Button android:id="@+id/ejectbutton"
-            android:background="@drawable/btn_eject"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_margin="5dp" />
+        android:orientation="horizontal" >
 
+        <Button
+            android:id="@+id/stopbutton"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/btn_stop" />
+
+        <Button
+            android:id="@+id/ejectbutton"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/btn_eject" />
     </LinearLayout>
+
 </LinearLayout>
