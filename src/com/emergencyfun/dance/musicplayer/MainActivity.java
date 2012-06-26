@@ -24,6 +24,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -123,28 +124,58 @@ public class MainActivity extends Activity implements OnClickListener {
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        /*MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.game_menu, menu);*/
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
         
-        menu.add(Menu.NONE, 0, Menu.NONE, R.string.settings_menu);
-        menu.add(Menu.NONE, 1, Menu.NONE, R.string.quit_menu);
+        /*menu.add(Menu.NONE, 0, Menu.NONE, R.string.settings_menu);
+        menu.add(Menu.NONE, 1, Menu.NONE, R.string.quit_menu);*/
         
         return true;
     }
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == 0)
+        switch(item.getItemId())
         {
+        case R.id.settings_menu:
             Toast.makeText(getApplicationContext(), 
                 "Settings menu!", 
                 Toast.LENGTH_SHORT).show();
-        }
-        else if (item.getItemId() == 1)
-        {
-            Toast.makeText(getApplicationContext(), 
-                "Quit!!", 
-                Toast.LENGTH_SHORT).show();
+            break;
+        case R.id.quit_menu:
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Are you sure you want to exit?")
+                   .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                       public void onClick(DialogInterface dialog, int id) {
+                            MainActivity.this.finish();
+                       }
+                   })
+                   .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                       public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                       }
+                   });
+            builder.show();
+            break;
+        case R.id.add_menu:
+            AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+            
+            final CharSequence[] items = {"Red", "Green", "Blue"};
+            
+            builder2.setTitle("Select Some Music")
+                   .setItems(items, new DialogInterface.OnClickListener() {
+                       public void onClick(DialogInterface dialog, int item) {
+                           Toast.makeText(getApplicationContext(), items[item], Toast.LENGTH_SHORT).show();
+                       }
+                   })
+                   .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                       public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                       }
+                   });
+            builder2.create();
+            builder2.show();
+            break;
         }
         return true;
     }

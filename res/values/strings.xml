@@ -19,4 +19,5 @@
     <string name="test_title">your mom\'s music player</string>
     <string name="settings_menu">Settings</string>
     <string name="quit_menu">Quit</string>
+    <string name="add_menu">Add</string>
 </resources>
