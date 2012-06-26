@@ -23,6 +23,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -117,6 +119,34 @@ public class MainActivity extends Activity implements OnClickListener {
         else if (target == mEjectButton) {
             showUrlDialog();
         }
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        /*MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.game_menu, menu);*/
+        
+        menu.add(Menu.NONE, 0, Menu.NONE, R.string.settings_menu);
+        menu.add(Menu.NONE, 1, Menu.NONE, R.string.quit_menu);
+        
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == 0)
+        {
+            Toast.makeText(getApplicationContext(), 
+                "Settings menu!", 
+                Toast.LENGTH_SHORT).show();
+        }
+        else if (item.getItemId() == 1)
+        {
+            Toast.makeText(getApplicationContext(), 
+                "Quit!!", 
+                Toast.LENGTH_SHORT).show();
+        }
+        return true;
     }
 
     /**
